@@ -19,6 +19,13 @@ export default defineConfig([
     languageOptions: {
       globals: globals.browser,
     },
+    rules: {
+      // shadcn components export their cva variants next to the component.
+      "react-refresh/only-export-components": [
+        "error",
+        { allowExportNames: ["buttonVariants"] },
+      ],
+    },
   },
   eslintConfigPrettier,
 ]);
