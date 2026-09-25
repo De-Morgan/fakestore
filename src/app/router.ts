@@ -1,5 +1,5 @@
 import HomePage from "@/pages/Home";
-import { createBrowserRouter, type RouteObject, data } from "react-router";
+import { createBrowserRouter, type RouteObject } from "react-router";
 import type { ComponentType } from "react";
 import RootLayout from "@/components/layout/RootLayout";
 import ErrorPage from "@/pages/ErrorPage";
