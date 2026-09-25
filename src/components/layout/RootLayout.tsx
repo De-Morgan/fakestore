@@ -15,7 +15,7 @@ export default function RootLayout() {
         />
       )}
       <Header />
-      <main id="main" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+      <main id="main" className="flex-1">
         <Outlet />
       </main>
       <Footer />

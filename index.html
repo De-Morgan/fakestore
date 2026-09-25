@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FakeStore</title>
     <meta name="theme-color" content="#9A588A" />
+    <script>
+      // Runs before first paint so dark-mode users never see a white flash. Keep in sync with ThemeProvider.
+      try {
+        const t =
+          JSON.parse(localStorage.getItem("fakestore:theme") || "{}").state
+            ?.mode ?? "system";
+        const dark =
+          t === "dark" ||
+          (t === "system" &&
+            matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", dark);
+        document.documentElement.style.colorScheme = dark ? "dark" : "light";
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

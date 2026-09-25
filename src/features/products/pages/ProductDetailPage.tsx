@@ -1,10 +1,11 @@
+import { Container } from "@/components/layout/Container";
 import { Link, useParams } from "react-router";
 
 export default function ProductDetailPage() {
   const { id } = useParams();
 
   return (
-    <section className="space-y-4">
+    <Container className="space-y-4 py-8">
       <h1 className="text-2xl font-bold">Product {id}</h1>
       <p className="text-muted-foreground">
         Product details arrive in Phase 3.
@@ -15,6 +16,6 @@ export default function ProductDetailPage() {
       >
         ← Back to products
       </Link>
-    </section>
+    </Container>
   );
 }

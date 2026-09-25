@@ -23,7 +23,7 @@ export default defineConfig([
       // shadcn components export their cva variants next to the component.
       "react-refresh/only-export-components": [
         "error",
-        { allowExportNames: ["buttonVariants"] },
+        { allowExportNames: ["buttonVariants", "badgeVariants"] },
       ],
     },
   },
