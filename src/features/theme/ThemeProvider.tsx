@@ -30,7 +30,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<ThemeMode>(readMode);
 
   useEffect(() => {
-    const mql = matchMedia("prefers-color-scheme: dark");
+    const mql = matchMedia("(prefers-color-scheme: dark)");
     const apply = () => {
       const dark = mode === "dark" || (mode === "system" && mql.matches);
       document.documentElement.classList.toggle("dark", dark);

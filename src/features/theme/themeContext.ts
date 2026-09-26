@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 export type ThemeMode = "light" | "dark" | "system";
 
-export const THEME_STORAGE_KEY = "fakcestore:theme";
+export const THEME_STORAGE_KEY = "fakestore:theme";
 
 type ThemeContextValue = {
   mode: ThemeMode;
