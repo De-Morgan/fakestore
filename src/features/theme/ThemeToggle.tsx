@@ -29,10 +29,6 @@ export function ThemeToggle() {
         <MoonIcon className="hidden dark:block" />
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={() => toast("Hello")}>
-          {" "}
-          Touch me
-        </DropdownMenuItem>
         <DropdownMenuRadioGroup
           value={mode}
           onValueChange={(value) => setMode(value as ThemeMode)}
