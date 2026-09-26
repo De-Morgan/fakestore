@@ -3,13 +3,11 @@ import { useTheme, type ThemeMode } from "./themeContext";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 
 const options = [
   { value: "light", label: "Light", Icon: SunIcon },
