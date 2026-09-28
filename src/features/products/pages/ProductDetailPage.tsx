@@ -32,7 +32,6 @@ function ProductDetail({ id }: { id: number }) {
   const { data: product } = useSuspenseQuery(productDetailQuery(id));
   return (
     <>
-      {" "}
       <article className="grid gap-8 md:grid-cols-2">
         <div className="rounded-xl p-8">
           <img
@@ -43,7 +42,7 @@ function ProductDetail({ id }: { id: number }) {
             className="mx-auto aspect-square w-full max-w-md object-contain"
           />
         </div>
-        <div className="space-x-4">
+        <div className="space-y-4">
           <Badge variant="secondary" className="capitalize">
             {product.category}
           </Badge>
