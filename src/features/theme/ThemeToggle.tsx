@@ -1,5 +1,5 @@
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
-import { useTheme, type ThemeMode } from "./themeContext";
+import { useThemeStore, type ThemeMode } from "./themeStore";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,9 @@ const options = [
   { value: "system", label: "System", Icon: MonitorIcon },
 ] as const;
 export function ThemeToggle() {
-  const { mode, setMode } = useTheme();
+  const mode = useThemeStore((s) => s.mode);
+  const setMode = useThemeStore((s) => s.setMode);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger

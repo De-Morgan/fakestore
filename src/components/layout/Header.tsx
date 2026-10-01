@@ -8,9 +8,11 @@ import { Badge } from "@/components/ui/badge";
 import { MobileNav } from "./MobileNav";
 import { UserMenu } from "./UserMenu";
 import { ShoppingCartIcon } from "lucide-react";
+import { useCartStore } from "@/features/cart/cartStore";
+import { selectCartCount } from "@/features/cart/selectors";
 
 export default function Header() {
-  const cartCount = 0; // Phase 4: read from the cart store.
+  const cartCount = useCartStore(selectCartCount);
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
@@ -47,16 +49,18 @@ export default function Header() {
           <ThemeToggle />
           <Link
             to="/cart"
-            aria-label={`Cart, ${cartCount} items`}
+            aria-label={`Cart, ${cartCount} ${cartCount === 1 ? "item" : "items"}`}
             className={cn(
               buttonVariants({ variant: "ghost", size: "icon" }),
               "relative",
             )}
           >
             <ShoppingCartIcon />
-            <Badge className="absolute -top-1 -right-1 h-4 min-w-4 px-1 text-[10px] tabular-nums">
-              {cartCount}
-            </Badge>
+            {cartCount > 0 && (
+              <Badge className="absolute -top-1 -right-1 h-4 min-w-4 px-1 text-[10px] tabular-nums">
+                {cartCount > 99 ? "99+" : cartCount}
+              </Badge>
+            )}
           </Link>
           <UserMenu />
         </div>

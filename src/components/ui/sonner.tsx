@@ -1,4 +1,4 @@
-import { useTheme } from "@/features/theme/themeContext";
+import { useThemeStore } from "@/features/theme/themeStore";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 import {
   CircleCheckIcon,
@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { mode } = useTheme();
+  const mode = useThemeStore((s) => s.mode);
 
   return (
     <Sonner

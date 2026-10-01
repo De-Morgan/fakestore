@@ -10,6 +10,7 @@ import { SectionBoundary } from "@/components/SectionBoundary";
 import { ProductGrid } from "../components/ProductGrid";
 import { RelatedProducts } from "../components/RelatedProducts";
 import { Skeleton } from "@/components/ui/skeleton";
+import { AddToCartButton } from "@/features/cart/components/AddToCartButton";
 
 export default function ProductDetailPage() {
   const id = Number(useParams().id);
@@ -49,13 +50,18 @@ function ProductDetail({ id }: { id: number }) {
           <h1 className="text-2xl font-bold text-balance md:text-3xl">
             {product.title}
           </h1>
-          <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
-            <StarIcon aria-hidden="true" className="size-4 fill-current" />
-            {product.rating.rate} / 5 · {product.rating.count} reviews
-          </p>
-          <p className="text-3xl font-semibold tabular-nums">
-            {formatPrice(product.price)}
-          </p>
+          <div className="flex items-start gap-16">
+            <div className="space-y-4">
+              <p className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <StarIcon aria-hidden="true" className="size-4 fill-current" />
+                {product.rating.rate} / 5 · {product.rating.count} reviews
+              </p>
+              <p className="text-3xl font-semibold tabular-nums">
+                {formatPrice(product.price)}
+              </p>
+            </div>
+            <AddToCartButton product={product} size={"lg"} />
+          </div>
           <p className="leading-relaxed text-muted-foreground">
             {product.description}
           </p>
