@@ -1,14 +1,20 @@
-import { UserIcon } from "lucide-react";
+import { LogOutIcon, UserIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLinkItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Link } from "react-router";
+import { selectIsLoggedIn, useAuthStore } from "@/features/auth/authStore";
+import { useLogout } from "@/features/auth/useLogout";
 
 export function UserMenu() {
+  const isLoggedIn = useAuthStore(selectIsLoggedIn);
+  const logout = useLogout();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -19,12 +25,21 @@ export function UserMenu() {
         <UserIcon />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={"w-40"}>
-        <DropdownMenuLinkItem render={<Link to={"/login"} />}>
-          Log in
-        </DropdownMenuLinkItem>
-        <DropdownMenuLinkItem render={<Link to={"/account"} />}>
-          Account
-        </DropdownMenuLinkItem>
+        {isLoggedIn ? (
+          <>
+            <DropdownMenuLinkItem render={<Link to={"/account"} />}>
+              Account
+            </DropdownMenuLinkItem>
+            <DropdownMenuItem onClick={logout}>
+              <LogOutIcon />
+              Log out
+            </DropdownMenuItem>
+          </>
+        ) : (
+          <DropdownMenuLinkItem render={<Link to={"/login"} />}>
+            Log in
+          </DropdownMenuLinkItem>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

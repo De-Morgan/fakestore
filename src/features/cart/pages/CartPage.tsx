@@ -1,7 +1,7 @@
 import { Container } from "@/components/layout/Container";
 import { selectCartCount, selectCartTotal, useCartItems } from "../selectors";
 import { useCartStore } from "../cartStore";
-import { ShoppingCartIcon } from "lucide-react";
+import { Loader2Icon, ShoppingCartIcon } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Link } from "react-router";
 import {
@@ -13,12 +13,24 @@ import {
 } from "@/components/ui/card";
 import { formatPrice } from "@/lib/format";
 import { CartLine } from "../components/CartLine";
+import { useAuthStore } from "@/features/auth/authStore";
+import { toNewCart, useCheckoutMutation } from "../api";
+import { useState } from "react";
 
 export default function CartPage() {
   const items = useCartItems();
   const count = useCartStore(selectCartCount);
   const total = useCartStore(selectCartTotal);
   const clear = useCartStore((s) => s.clear);
+
+  const userId = useAuthStore((s) => s.userId);
+  const checkout = useCheckoutMutation();
+  const [simulateFailure, setSimulateFailure] = useState(false);
+
+  const handleCheckout = () => {
+    if (userId == null) return;
+    checkout.mutate({ cart: toNewCart(userId, items), simulateFailure });
+  };
 
   if (items.length === 0) {
     return (
@@ -65,9 +77,36 @@ export default function CartPage() {
             </span>
           </CardContent>
           <CardFooter className="flex-col items-stretch gap-2">
-            <Button size="lg" disabled>
-              Checkout
-            </Button>
+            {userId == null ? (
+              <Link
+                to={`/login?next=${encodeURIComponent("/cart")}`}
+                className={buttonVariants({ size: "lg" })}
+              >
+                Log in to check out
+              </Link>
+            ) : (
+              <Button
+                size="lg"
+                onClick={handleCheckout}
+                disabled={checkout.isPending}
+              >
+                {checkout.isPending && (
+                  <Loader2Icon aria-hidden="true" className="animate-spin" />
+                )}
+                Checkout
+              </Button>
+            )}
+            {import.meta.env.DEV && (
+              <label className="flex items-center gap-2 text-xs text-muted-foreground">
+                <input
+                  type="checkbox"
+                  checked={simulateFailure}
+                  onChange={(e) => setSimulateFailure(e.target.checked)}
+                  className="accent-primary"
+                />
+                Simulate failure (dev only)
+              </label>
+            )}
           </CardFooter>
         </Card>
       </div>

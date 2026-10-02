@@ -11,6 +11,10 @@ import ErrorPage from "@/pages/ErrorPage";
 import { queryClient } from "./queryClient";
 import { productDetailQuery, productListQuery } from "@/features/products/api";
 import { ApiError } from "@/api/client";
+import {
+  redirectIfAuthenticated,
+  requireAuth,
+} from "@/features/auth/requireAuth";
 
 // Turns a default-exported page module into a `lazy` route definition.
 const page = (load: () => Promise<{ default: ComponentType }>) => async () => ({
@@ -67,10 +71,12 @@ export const routes: RouteObject[] = [
       },
       {
         path: "login",
+        loader: redirectIfAuthenticated,
         lazy: page(() => import("@/features/auth/pages/LoginPage")),
       },
       {
         path: "account",
+        loader: requireAuth,
         lazy: page(() => import("@/features/auth/pages/AccountPage")),
       },
       {
