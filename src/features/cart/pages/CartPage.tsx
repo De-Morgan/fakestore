@@ -35,6 +35,7 @@ export default function CartPage() {
   if (items.length === 0) {
     return (
       <Container className="flex flex-col items-center gap-4 py-16 text-center">
+        <title>Cart . FakeStore</title>
         <ShoppingCartIcon
           aria-hidden="true"
           className="size-12 text-muted-foreground"
@@ -51,6 +52,7 @@ export default function CartPage() {
   }
   return (
     <Container className="space-y-4 py-8">
+      <title>{`Cart (${count}) . FakeStore`}</title>
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="text-2xl font-bold">Cart</h1>
         <Button variant="ghost" size="sm" onClick={clear}>
@@ -91,7 +93,10 @@ export default function CartPage() {
                 disabled={checkout.isPending}
               >
                 {checkout.isPending && (
-                  <Loader2Icon aria-hidden="true" className="animate-spin" />
+                  <Loader2Icon
+                    aria-hidden="true"
+                    className="motion-safe:animate-spin"
+                  />
                 )}
                 Checkout
               </Button>

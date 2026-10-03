@@ -10,7 +10,7 @@ export class ApiError extends Error {
 }
 
 export const http = axios.create({
-  baseURL: import.meta.env.VITE_API_URL ?? "https://fakestoreapi.com",
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 10_000,
 });
 

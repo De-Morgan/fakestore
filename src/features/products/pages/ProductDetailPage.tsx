@@ -11,6 +11,8 @@ import { ProductGrid } from "../components/ProductGrid";
 import { RelatedProducts } from "../components/RelatedProducts";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AddToCartButton } from "@/features/cart/components/AddToCartButton";
+import { ProductImage } from "../components/ProductImage";
+import { QueryBoundary } from "@/components/QueryBoundary";
 
 export default function ProductDetailPage() {
   const id = Number(useParams().id);
@@ -23,9 +25,9 @@ export default function ProductDetailPage() {
       >
         ← Back to products
       </Link>
-      <Suspense fallback={<DetailSkeleton />}>
-        <ProductDetail key={id} id={id} />
-      </Suspense>
+      <QueryBoundary fallback={<DetailSkeleton />}>
+        <ProductDetail id={id} />
+      </QueryBoundary>
     </Container>
   );
 }
@@ -33,14 +35,15 @@ function ProductDetail({ id }: { id: number }) {
   const { data: product } = useSuspenseQuery(productDetailQuery(id));
   return (
     <>
+      <title>{`${product.title} · FakeStore`}</title>
       <article className="grid gap-8 md:grid-cols-2">
         <div className="rounded-xl p-8">
-          <img
+          <ProductImage
             src={product.image}
             alt={product.title}
-            width={500}
-            height={500}
-            className="mx-auto aspect-square w-full max-w-md object-contain"
+            size={500}
+            fetchPriority="high"
+            className="mx-auto max-w-md"
           />
         </div>
         <div className="space-y-4">

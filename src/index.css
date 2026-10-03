@@ -127,4 +127,8 @@
   html {
     @apply font-sans;
   }
+  /* Headings focused by useFocusOnNavigate: focus moves there for screen readers, no ring needed. */
+  h1[tabindex="-1"]:focus {
+    @apply outline-none;
+  }
 }

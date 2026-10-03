@@ -23,6 +23,7 @@ export default function AccountPage() {
 
   return (
     <Container className="space-y-8 py-8">
+      <title>Account . FakeStore</title>
       <div className="flex items-baseline justify-between gap-4">
         <h1 className="text-2xl font-bold">Account</h1>
         <Button variant="outline" size="sm" onClick={logout}>

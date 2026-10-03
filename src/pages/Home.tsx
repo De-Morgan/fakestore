@@ -5,6 +5,7 @@ import { Link } from "react-router";
 export default function HomePage() {
   return (
     <section className="bg-linear-to-b from-accent to-background">
+      <title>FakeStore</title>
       <Container className="flex flex-col items-center gap-6 py-20 text-center sm:py-28">
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight text-balance sm:text-5xl">
           Everything you need, one click away

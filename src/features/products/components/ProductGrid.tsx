@@ -7,9 +7,10 @@ const gridClass = "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4";
 export function ProductGrid({ products }: { products: Product[] }) {
   return (
     <ul className={gridClass}>
-      {products.map((product) => (
+      {products.map((product, i) => (
         <li key={product.id} className="grid">
-          <ProductCard product={product} />
+          {/* The first row is above the fold and often the LCP element: don't lazy-load it. */}
+          <ProductCard product={product} eager={i < 4} />
         </li>
       ))}
     </ul>

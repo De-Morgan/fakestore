@@ -65,6 +65,7 @@ export default function LoginPage() {
 
   return (
     <Container className="flex justify-center py-12">
+      <title>Log in . FakeStore</title>
       <Card className="w-full max-w-sm">
         <CardHeader>
           <CardTitle>
@@ -118,7 +119,10 @@ export default function LoginPage() {
           <CardFooter className="flex-col items-stretch gap-2">
             <Button type="submit" size="lg" disabled={login.isPending}>
               {login.isPending && (
-                <Loader2Icon aria-hidden="true" className="animate-spin" />
+                <Loader2Icon
+                  aria-hidden="true"
+                  className="motion-safe:animate-spin"
+                />
               )}
               Log in
             </Button>

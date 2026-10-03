@@ -10,7 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { DEFAULT_SORT } from "../searchParams";
+import { DEFAULT_SORT, updateParams } from "../searchParams";
+import { ProductSearch } from "./ProductSearch";
 
 const ALL = "all";
 
@@ -19,8 +20,9 @@ const sortItems = [
   { value: "asc", label: "Oldest first" },
   { value: "desc", label: "Newest first" },
 ];
+type ProductFilterProps = { filters: Filters; q: string };
 
-export function ProductFilters({ filters }: { filters: Filters }) {
+export function ProductFilters({ filters, q }: ProductFilterProps) {
   const [, setSearchParams] = useSearchParams();
   const categories = useQuery(categoriesQuery());
   const categoryLabelId = useId();
@@ -42,17 +44,13 @@ export function ProductFilters({ filters }: { filters: Filters }) {
     replace: boolean,
   ) =>
     setSearchParams(
-      (prev) => {
-        const next = new URLSearchParams(prev);
-        if (isDefault) next.delete(key);
-        else next.set(key, value);
-        return next;
-      },
+      (prev) => updateParams(prev, key, isDefault ? null : value),
       { replace },
     );
 
   return (
-    <div className="flex flex-wrap items-end gap-4">
+    <div className="flex w-full flex-wrap items-end gap-4 sm:w-auto">
+      <ProductSearch q={q} />
       <div className="grid gap-1.5">
         <Label id={categoryLabelId}>Category</Label>
         <Select

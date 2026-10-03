@@ -4,6 +4,7 @@ import { Link } from "react-router";
 export default function NotFound() {
   return (
     <Container className="flex flex-col items-center gap-4 py-16 text-center">
+      <title>Page not found . FakeStore</title>
       <p className="text-sm font-semibold text-primary">404</p>
       <h1 className="text-3xl font-bold">Page not found</h1>
       <p className="text-muted-foreground">

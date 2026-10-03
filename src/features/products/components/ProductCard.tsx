@@ -6,8 +6,9 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { formatPrice } from "@/lib/format";
 import { StarIcon } from "lucide-react";
 import { AddToCartButton } from "@/features/cart/components/AddToCartButton";
-
-export function ProductCard({ product }: { product: Product }) {
+import { ProductImage } from "./ProductImage";
+type ProductCardProps = { product: Product; eager?: boolean };
+export function ProductCard({ product, eager = false }: ProductCardProps) {
   const queryClient = useQueryClient();
   const { id, image, title, price, rating } = product;
 
@@ -17,14 +18,11 @@ export function ProductCard({ product }: { product: Product }) {
     <Card className="relative h-full transition-shadow hover:shadow-md has-[a:focus-visible]:ring-3 has-[a:focus-visible]:ring-ring/50">
       <CardContent className="space-y-3">
         <div className="rounded-lg p-4">
-          <img
+          <ProductImage
             src={image}
             alt=""
-            width={300}
-            height={300}
-            loading="lazy"
-            decoding="async"
-            className="aspect-square w-full object-contain"
+            size={300}
+            loading={eager ? "eager" : "lazy"}
           />
         </div>
         <h3 className="line-clamp-2 font-medium">

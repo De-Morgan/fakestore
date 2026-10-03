@@ -1,5 +1,6 @@
 import { Suspense, useId, type ReactNode } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { QueryBoundary } from "./QueryBoundary";
 
 type SectionBoundaryProps = {
   title: string;
@@ -20,14 +21,7 @@ export function SectionBoundary({
       <h2 id={headingId} className="text-xl font-semibold">
         {title}
       </h2>
-      {/* ErrorBoundary outside Suspense, so a failed load replaces the skeleton too. */}
-      <ErrorBoundary
-        fallback={
-          <p className="text-muted-foreground">Couldn't load this section.</p>
-        }
-      >
-        <Suspense fallback={fallback}>{children}</Suspense>
-      </ErrorBoundary>
+      <QueryBoundary fallback={fallback}>{children}</QueryBoundary>
     </section>
   );
 }

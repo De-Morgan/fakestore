@@ -55,7 +55,8 @@ export default function Header() {
               "relative",
             )}
           >
-            <ShoppingCartIcon />
+            <ShoppingCartIcon aria-hidden="true" />
+
             {cartCount > 0 && (
               <Badge className="absolute -top-1 -right-1 h-4 min-w-4 px-1 text-[10px] tabular-nums">
                 {cartCount > 99 ? "99+" : cartCount}
@@ -63,6 +64,10 @@ export default function Header() {
             )}
           </Link>
           <UserMenu />
+          {/* The badge is visual only. This announces "3 items in cart" after an add. */}
+          <span aria-live="polite" className="sr-only">
+            {cartCount} {cartCount === 1 ? "item" : "items"} in cart
+          </span>
         </div>
       </Container>
     </header>

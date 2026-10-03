@@ -17,8 +17,10 @@ export function Providers({ children }: { children: ReactNode }) {
       <ThemeSync />
       {children}
       <Toaster richColors closeButton />
-      {/* Renders nothing in production builds. */}
-      <ReactQueryDevtools buttonPosition="bottom-left" />
+      {/* import.meta.env.DEV is replaced with `false` in builds, so this whole branch is dropped. */}
+      {import.meta.env.DEV && (
+        <ReactQueryDevtools buttonPosition="bottom-left" />
+      )}
     </QueryClientProvider>
   );
 }

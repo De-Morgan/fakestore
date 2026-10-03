@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 node_modules
 dist
+.env
 .env*.local
 coverage
 stats.html
