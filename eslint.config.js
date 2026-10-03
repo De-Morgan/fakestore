@@ -8,7 +8,7 @@ import eslintConfigPrettier from "eslint-config-prettier";
 import pluginQuery from "@tanstack/eslint-plugin-query";
 
 export default defineConfig([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "coverage"]),
   ...pluginQuery.configs["flat/recommended"],
   {
     files: ["**/*.{ts,tsx}"],

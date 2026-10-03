@@ -5,6 +5,7 @@ import {
   type LoaderFunctionArgs,
   type RouteObject,
 } from "react-router";
+import type { QueryClient } from "@tanstack/react-query";
 import type { ComponentType } from "react";
 import RootLayout from "@/components/layout/RootLayout";
 import ErrorPage from "@/pages/ErrorPage";
@@ -27,28 +28,35 @@ const notFound = () =>
 
 // Render-as-you-fetch: runs in parallel with the lazy page download and only warms the cache.
 // The page reads the same data through useSuspenseQuery, so the cache stays the single source of truth.
-async function productDetailLoader({ params }: LoaderFunctionArgs) {
-  const id = Number(params.id);
-  if (!Number.isInteger(id) || id < 1) {
-    throw notFound();
-  }
-  try {
-    // Critical data: awaited, so navigation waits for it (instant if already cached).
-    const product = await queryClient.ensureQueryData(productDetailQuery(id));
-    // Non-critical data: start fetching, but don't wait for it.
-    void queryClient.prefetchQuery(
-      productListQuery({ category: product.category, sort: "asc" }),
-    );
-    return null;
-  } catch (error) {
-    if (error instanceof ApiError && error.status === 404) {
+const productDetailLoader =
+  (queryClient: QueryClient) =>
+  async ({ params }: LoaderFunctionArgs) => {
+    const id = Number(params.id);
+    if (!Number.isInteger(id) || id < 1) {
       throw notFound();
     }
-    throw error;
-  }
-}
+    try {
+      // Critical data: awaited, so navigation waits for it (instant if already cached).
+      const product = await queryClient.ensureQueryData(productDetailQuery(id));
+      // Non-critical data: start fetching, but don't wait for it.
+      void queryClient.prefetchQuery(
+        productListQuery({ category: product.category, sort: "asc" }),
+      );
+      return null;
+    } catch (error) {
+      if (error instanceof ApiError && error.status === 404) {
+        throw notFound();
+      }
+      throw error;
+    }
+  };
 
-export const routes: RouteObject[] = [
+// A factory, so tests can build the same route tree around a fresh, per-test QueryClient.
+export const createRoutes = ({
+  queryClient,
+}: {
+  queryClient: QueryClient;
+}): RouteObject[] => [
   {
     path: "/",
     Component: RootLayout,
@@ -62,7 +70,7 @@ export const routes: RouteObject[] = [
       },
       {
         path: "products/:id",
-        loader: productDetailLoader,
+        loader: productDetailLoader(queryClient),
         lazy: page(() => import("@/features/products/pages/ProductDetailPage")),
       },
       {
@@ -86,4 +94,4 @@ export const routes: RouteObject[] = [
     ],
   },
 ];
-export const router = createBrowserRouter(routes);
+export const router = createBrowserRouter(createRoutes({ queryClient }));

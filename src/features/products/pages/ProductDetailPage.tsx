@@ -1,6 +1,5 @@
 import { Container } from "@/components/layout/Container";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense } from "react";
 import { Link, useParams } from "react-router";
 import { productDetailQuery } from "../api";
 import { Badge } from "@/components/ui/badge";

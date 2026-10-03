@@ -1,5 +1,4 @@
-import { Suspense, useId, type ReactNode } from "react";
-import { ErrorBoundary } from "react-error-boundary";
+import { useId, type ReactNode } from "react";
 import { QueryBoundary } from "./QueryBoundary";
 
 type SectionBoundaryProps = {

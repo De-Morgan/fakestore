@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
@@ -16,7 +17,25 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      "@": path.resolve(import.meta.dirname, "./src"),
+    },
+  },
+  test: {
+    environment: "jsdom",
+    setupFiles: ["./src/test/setup.ts"],
+    css: false,
+    // .env is gitignored, so CI has no VITE_API_URL. MSW handlers listen on this origin.
+    env: { VITE_API_URL: "https://fakestoreapi.com" },
+    coverage: {
+      provider: "v8",
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/test/**",
+        "src/**/*.test.{ts,tsx}",
+        "src/components/ui/**",
+      ],
+      // `pnpm coverage` fails if the cart (pure logic + its pages) drops below this.
+      thresholds: { "src/features/cart/**": { lines: 90 } },
     },
   },
 });
