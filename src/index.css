@@ -2,12 +2,39 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+@import "@fontsource-variable/big-shoulders-display";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: "Geist Variable", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  /* Signage face: the homepage directory board, floor indicator and H1 only. */
+  --font-display: "Big Shoulders Display Variable", "Arial Narrow", sans-serif;
+  --color-felt: var(--felt);
+  --color-letter: var(--letter);
+  --color-brass: var(--brass);
+  --color-window: var(--window);
+  --animate-press-in: press-in 480ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-digit-roll: digit-roll 360ms cubic-bezier(0.3, 0.8, 0.3, 1) both;
+
+  /* Letters pushed into a felt board: they arrive slightly large and soft, then seat. */
+  @keyframes press-in {
+    from {
+      opacity: 0;
+      transform: translateY(-0.12em) scale(1.04);
+      filter: blur(2px);
+    }
+  }
+  /* Elevator digit: rolls in from below going up, from above going down (--roll-from). */
+  @keyframes digit-roll {
+    from {
+      opacity: 0;
+      transform: translateY(var(--roll-from, 60%));
+    }
+  }
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -76,6 +103,11 @@
   --sidebar-primary-foreground: oklch(0.985 0 0);
   --sidebar-ring: oklch(0.553 0.109 336.6);
   --radius: 0.625rem;
+  /* Homepage directory board. The board is a physical object, so felt/letter/brass don't change in dark mode. */
+  --felt: #3b1f35;
+  --letter: #f4eef2;
+  --brass: #b8913a;
+  --window: #eeeaf1;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-accent: oklch(0.97 0 0);
@@ -85,6 +117,7 @@
 
 .dark {
   --background: oklch(0.145 0 0);
+  --window: #241a23;
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
   --card-foreground: oklch(0.985 0 0);
@@ -115,6 +148,19 @@
   --sidebar-accent: oklch(0.269 0 0);
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
+}
+
+/* Letterboard felt: horizontal grooves the letters slot into. */
+@utility felt-grooves {
+  background-color: var(--felt);
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 9px,
+      rgb(0 0 0 / 0.28) 9px 10px,
+      rgb(255 255 255 / 0.05) 10px 11px
+    ),
+    radial-gradient(ellipse at 30% 0%, rgb(255 255 255 / 0.07), transparent 60%);
 }
 
 @layer base {
