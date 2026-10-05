@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 type QueryBoundaryProps = {
   fallback: ReactNode;
   errorMessage?: string;
+  /** Replaces the default "Try again" block. Pass null to hide a failed section entirely. */
+  errorFallback?: ReactNode;
   children: ReactNode;
 };
 
@@ -15,6 +17,7 @@ type QueryBoundaryProps = {
 export function QueryBoundary({
   fallback,
   errorMessage = "Couldn't load this section.",
+  errorFallback,
   children,
 }: QueryBoundaryProps) {
   return (
@@ -23,14 +26,22 @@ export function QueryBoundary({
         // ErrorBoundary outside Suspense, so a failed load replaces the skeleton too.
         <ErrorBoundary
           onReset={reset}
-          fallbackRender={({ resetErrorBoundary }) => (
-            <div role="alert" className="flex flex-col items-start gap-3">
-              <p className="text-muted-foreground">{errorMessage}</p>
-              <Button variant="outline" size="sm" onClick={resetErrorBoundary}>
-                Try again
-              </Button>
-            </div>
-          )}
+          fallbackRender={({ resetErrorBoundary }) =>
+            errorFallback !== undefined ? (
+              errorFallback
+            ) : (
+              <div role="alert" className="flex flex-col items-start gap-3">
+                <p className="text-muted-foreground">{errorMessage}</p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetErrorBoundary}
+                >
+                  Try again
+                </Button>
+              </div>
+            )
+          }
         >
           <Suspense fallback={fallback}>{children}</Suspense>
         </ErrorBoundary>
