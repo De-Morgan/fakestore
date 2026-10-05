@@ -1,12 +1,10 @@
 # FakeStore
 
-[![CI](https://github.com/De-Morgan/fakestore/actions/workflows/ci.yml/badge.svg)](https://github.com/De-Morgan/fakestore/actions/workflows/ci.yml)
-
 A production-style e-commerce storefront built on the [FakeStore API](https://fakestoreapi.com), written to show how a modern React app is put together in 2026: React 19, React Router data routers, TanStack Query, Zustand, Zod, React Hook Form, Tailwind CSS v4 and shadcn/ui, tested with Vitest, Testing Library and MSW.
 
 The point of the project isn't the shop itself. It's the decisions behind it: where each piece of state lives, how data is fetched before a page renders, how loading and error states are scoped, how optimistic updates roll back, and how all of it is tested against a mocked network without mocking a single module.
 
-**Live demo:** _coming soon_
+[Live demo](https://fakestore-vite.vercel.app/))
 
 ---
 
@@ -43,15 +41,15 @@ The point of the project isn't the shop itself. It's the decisions behind it: wh
 
 | Concern        | Library                                                                                                          | Why                                                                                                |
 | -------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| UI             | [React 19](https://react.dev)                                                                                    | Native `<title>` metadata, `useEffectEvent`, `useSyncExternalStore`, StrictMode-safe effects       |
-| Build          | [Vite 8](https://vite.dev) + TypeScript 6                                                                        | Instant dev server, fast production builds, `import.meta.env` for config                           |
+| UI             | [React 19](https://react.dev)                                                                                    | Native`<title>` metadata, `useEffectEvent`, `useSyncExternalStore`, StrictMode-safe effects        |
+| Build          | [Vite 8](https://vite.dev) + TypeScript 6                                                                        | Instant dev server, fast production builds,`import.meta.env` for config                            |
 | Routing        | [React Router 8](https://reactrouter.com) (data router)                                                          | Loaders, redirects, lazy routes, route-level error boundaries, scroll restoration                  |
 | Server state   | [TanStack Query 5](https://tanstack.com/query)                                                                   | Caching, deduplication, retries, Suspense, placeholder data, optimistic mutations, offline pausing |
-| Client state   | [Zustand 5](https://zustand.docs.pmnd.rs)                                                                        | Tiny stores with `persist` and `devtools` middleware, readable outside React (in loaders)          |
-| HTTP           | [axios](https://axios-http.com)                                                                                  | Interceptors to normalise errors, timeouts, `AbortSignal` cancellation, query-string encoding      |
+| Client state   | [Zustand 5](https://zustand.docs.pmnd.rs)                                                                        | Tiny stores with`persist` and `devtools` middleware, readable outside React (in loaders)           |
+| HTTP           | [axios](https://axios-http.com)                                                                                  | Interceptors to normalise errors, timeouts,`AbortSignal` cancellation, query-string encoding       |
 | Validation     | [Zod 4](https://zod.dev)                                                                                         | One schema gives both the runtime check and the static type                                        |
 | Forms          | [React Hook Form](https://react-hook-form.com) + `@hookform/resolvers`                                           | Uncontrolled inputs, Zod-driven validation, form-level server errors                               |
-| Styling        | [Tailwind CSS v4](https://tailwindcss.com)                                                                       | CSS-first config with `@theme`, OKLCH design tokens, class-based dark mode                         |
+| Styling        | [Tailwind CSS v4](https://tailwindcss.com)                                                                       | CSS-first config with`@theme`, OKLCH design tokens, class-based dark mode                          |
 | Components     | [shadcn/ui](https://ui.shadcn.com) on [Base UI](https://base-ui.com)                                             | Accessible primitives you own and can edit, not a dependency you fight                             |
 | Feedback       | [Sonner](https://sonner.emilkowal.ski), [lucide-react](https://lucide.dev)                                       | Toasts and icons                                                                                   |
 | Error handling | [react-error-boundary](https://github.com/bvaughn/react-error-boundary)                                          | Resettable boundaries wired into TanStack Query's error reset                                      |
@@ -87,18 +85,18 @@ Variables prefixed with `VITE_` are **public**: Vite inlines them into the JavaS
 
 ## Scripts
 
-| Script                         | What it does                                                                |
-| ------------------------------ | --------------------------------------------------------------------------- |
-| `pnpm dev`                     | Dev server with hot module replacement                                      |
-| `pnpm build`                   | Type-check, then production build to `dist/`                                |
-| `pnpm preview`                 | Serve the production build locally                                          |
-| `pnpm typecheck`               | `tsc -b` across the app and Node configs                                    |
-| `pnpm lint`                    | ESLint                                                                      |
-| `pnpm format` / `format:check` | Prettier write / check                                                      |
-| `pnpm test`                    | Vitest in watch mode                                                        |
-| `pnpm test:run`                | Vitest, single run                                                          |
-| `pnpm coverage`                | Vitest with V8 coverage; fails if `src/features/cart` drops below 90% lines |
-| `pnpm analyze`                 | Production build plus a bundle treemap in `stats.html`                      |
+| Script                         | What it does                                                               |
+| ------------------------------ | -------------------------------------------------------------------------- |
+| `pnpm dev`                     | Dev server with hot module replacement                                     |
+| `pnpm build`                   | Type-check, then production build to`dist/`                                |
+| `pnpm preview`                 | Serve the production build locally                                         |
+| `pnpm typecheck`               | `tsc -b` across the app and Node configs                                   |
+| `pnpm lint`                    | ESLint                                                                     |
+| `pnpm format` / `format:check` | Prettier write / check                                                     |
+| `pnpm test`                    | Vitest in watch mode                                                       |
+| `pnpm test:run`                | Vitest, single run                                                         |
+| `pnpm coverage`                | Vitest with V8 coverage; fails if`src/features/cart` drops below 90% lines |
+| `pnpm analyze`                 | Production build plus a bundle treemap in`stats.html`                      |
 
 ## Project structure
 
@@ -166,7 +164,7 @@ API responses never get copied into a Zustand store, and filters never get copie
 | `/products`     |                           | Filter, sort, search, paginate; all state in the URL       |
 | `/products/:id` | `productDetailLoader`     | Awaits the product, prefetches related items, 404s cleanly |
 | `/cart`         |                           | Edit quantities, checkout                                  |
-| `/login`        | `redirectIfAuthenticated` | Honours a safe `?next=` redirect                           |
+| `/login`        | `redirectIfAuthenticated` | Honours a safe`?next=` redirect                            |
 | `/account`      | `requireAuth`             | Profile and order history                                  |
 | `*`             |                           | Not found                                                  |
 
@@ -359,11 +357,11 @@ pnpm coverage    # single run with coverage thresholds
 
 The suite covers three layers:
 
-| Layer    | What it tests                                                         | Example                                                                                                                          |
-| -------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Unit** | Store actions and selectors, called through `useCartStore.getState()` | [cartStore.test.ts](src/features/cart/cartStore.test.ts)                                                                         |
-| **Page** | Whole pages through the real route tree, queried by role and label    | [ProductsPage.test.tsx](src/features/products/pages/ProductsPage.test.tsx)                                                       |
-| **Flow** | Login with redirects, checkout with optimistic success and rollback   | [LoginPage.test.tsx](src/features/auth/pages/LoginPage.test.tsx), [CartPage.test.tsx](src/features/cart/pages/CartPage.test.tsx) |
+| Layer    | What it tests                                                        | Example                                                                                                                          |
+| -------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| **Unit** | Store actions and selectors, called through`useCartStore.getState()` | [cartStore.test.ts](src/features/cart/cartStore.test.ts)                                                                         |
+| **Page** | Whole pages through the real route tree, queried by role and label   | [ProductsPage.test.tsx](src/features/products/pages/ProductsPage.test.tsx)                                                       |
+| **Flow** | Login with redirects, checkout with optimistic success and rollback  | [LoginPage.test.tsx](src/features/auth/pages/LoginPage.test.tsx), [CartPage.test.tsx](src/features/cart/pages/CartPage.test.tsx) |
 
 How it's set up:
 
@@ -397,13 +395,13 @@ The app deploys to **Vercel** with the Vite framework preset:
 
 FakeStore is a free mock API, and a few of its behaviours shaped the code. Handling them properly is part of the exercise:
 
-| Quirk                                               | How the app handles it                                                                                                           |
-| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Unknown product ids return `200` with an empty body | `apiFetch` converts an empty body into a `404` `ApiError`, which the loader turns into a Not Found page                          |
-| Writes are accepted but never saved                 | Order history uses `staleTime`/`gcTime: Infinity` and is updated from the mutation, never refetched; orders last for the session |
-| The `sort` param orders by id, not price            | Labelled "Oldest first" / "Newest first", matching what the API actually does                                                    |
-| Product images occasionally 404                     | `ProductImage` swaps in a neutral placeholder                                                                                    |
-| The JWT only carries the user id                    | Decoded client-side for UI purposes only                                                                                         |
+| Quirk                                              | How the app handles it                                                                                                          |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Unknown product ids return`200` with an empty body | `apiFetch` converts an empty body into a `404` `ApiError`, which the loader turns into a Not Found page                         |
+| Writes are accepted but never saved                | Order history uses`staleTime`/`gcTime: Infinity` and is updated from the mutation, never refetched; orders last for the session |
+| The`sort` param orders by id, not price            | Labelled "Oldest first" / "Newest first", matching what the API actually does                                                   |
+| Product images occasionally 404                    | `ProductImage` swaps in a neutral placeholder                                                                                   |
+| The JWT only carries the user id                   | Decoded client-side for UI purposes only                                                                                        |
 
 ---
 
