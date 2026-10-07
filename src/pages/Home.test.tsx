@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { screen, within } from "@testing-library/react";
 import { http } from "msw";
 import { renderWithProviders } from "@/test/renderWithProviders";
@@ -10,6 +10,10 @@ import { FLOORS, topRatedByCategory } from "./home/floors";
 
 describe("HomePage", () => {
   it("renders the directory and every floor link when the API is down", async () => {
+    // React logs the error the live section's boundary catches; it's expected here.
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     server.use(
       http.get(`${API}/products`, () =>
         json({ message: "down" }, { status: 500 }),
@@ -48,6 +52,8 @@ describe("HomePage", () => {
     expect(
       screen.queryByRole("heading", { name: /best rated on each floor/i }),
     ).not.toBeInTheDocument();
+    expect(consoleError).toHaveBeenCalled();
+    consoleError.mockRestore();
   });
 
   it("shows the best-rated product on each floor when the API is up", async () => {

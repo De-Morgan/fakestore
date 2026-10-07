@@ -4,7 +4,9 @@ A production-style e-commerce storefront built on the [FakeStore API](https://fa
 
 The point of the project isn't the shop itself. It's the decisions behind it: where each piece of state lives, how data is fetched before a page renders, how loading and error states are scoped, how optimistic updates roll back, and how all of it is tested against a mocked network without mocking a single module.
 
-[Live demo](https://fakestore-vite.vercel.app/))
+[Live demo](https://fakestore-vite.vercel.app/)
+
+[![The FakeStore homepage, a department-store lobby with a "Pick a floor" directory board](screenshots/lobby.png)](https://fakestore-vite.vercel.app/)
 
 ---
 

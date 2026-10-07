@@ -61,6 +61,8 @@ export const createRoutes = ({
     path: "/",
     Component: RootLayout,
     ErrorBoundary: ErrorPage,
+    // Shown while the first route's lazy module loads; without it React Router warns.
+    HydrateFallback: () => null,
     children: [
       { index: true, Component: HomePage },
 

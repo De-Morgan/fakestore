@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { http } from "msw";
@@ -115,6 +115,10 @@ describe("CartPage", () => {
   });
 
   it("rolls back and keeps the cart when checkout fails", async () => {
+    // onError logs the failure in DEV; keep the expected error out of the test output.
+    const consoleError = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
     const user = userEvent.setup();
     server.use(http.post(`${API}/carts`, () => json(null, { status: 500 })));
     preloadCart();
@@ -129,5 +133,7 @@ describe("CartPage", () => {
     expect(screen.queryByText("New order")).not.toBeInTheDocument();
     expect(screen.getByText("Order #3")).toBeInTheDocument();
     expect(Object.keys(useCartStore.getState().items)).toEqual(["1", "2"]);
+    expect(consoleError).toHaveBeenCalled();
+    consoleError.mockRestore();
   });
 });
